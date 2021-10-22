@@ -6,6 +6,7 @@
 	<title>Login Page</title>
     <link rel="stylesheet" href="login.css" type="text/css">
 </head>
+
 <body>
 	<!-- Main Content -->
 	<div class="container-fluid">
@@ -20,7 +21,7 @@
 						<h2>Log In</h2>
 					</div>
 					<div class="row">
-						<form control="" class="form-group">
+						<form control="" class="form-group" id="loginForm" method="POST" onsubmit="return login()" action="xuly_login.php">
 							<div class="row">
 								<input type="text" name="username" id="username" class="form__input" placeholder="Username">
 							</div>
@@ -33,19 +34,46 @@
 								<label for="remember_me">Remember Me!</label>
 							</div>
 							<div class="row">
-								<input type="submit" value="Submit" class="btn">
+								<input name="btn_submits" type="submit" value="Submit" class="btn">
 							</div>
 						</form>
 					</div>
 					<div class="row">
-						<p>Don't have an account? <a href="#">Register Here</a></p>
+						<p>Don't have an account? <a href="signup.php">Register Here</a></p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Footer -->
-	<div class="container-fluid text-center footer">
-		Coded with &hearts; by <a href="https://bit.ly/yinkaenoch">Yinka.</a></p>
-	</div>
+
+	<script type="text/javascript">
+        
+        function login(){
+
+            var username = document.forms['loginForm']['username'].value;
+            var password = document.forms['loginForm']['password'].value;
+            var check = true;
+            var message = '';
+
+            if ( (username == null || username == '') ) {
+                message += " username ";
+                check = false;
+            }
+
+            if((password == null || password == '' )){
+                message += " password ";
+                check = false;
+            }
+
+
+            if(!check){
+                alert(message + " is null. Please input !!!");
+                return false;
+            }
+            return true;
+    
+        }
+
+    </script>
 </body>

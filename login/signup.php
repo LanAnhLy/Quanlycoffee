@@ -36,7 +36,7 @@
     <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../images/logo_montea.PNG" alt="">
+                <img src="../images/logo_montea.PNG" alt="logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
                     <div class="card">
                         <div class="card-header">ĐĂNG KÝ THÀNH VIÊN </div>
                         <div class="card-body">
-                            <form name="my-form" onsubmit="return validform()" action="success.php" method="">
+                            <form name="my-form" onsubmit="return validform()" action="success.php" method="POST">
                                 <div class="form-group row">
                                     
                                     <div class="col-md-6">
@@ -94,40 +94,58 @@
                                 <div class="form-group row">
                                     
                                     <div class="col-md-6">
-                                        <label for="city" >TỈNH/THÀNH PHỐ <span class="lb_span">(*)</span></label> <br>
-                                        <select name="city" id="city" class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
+                                        <label for="sex" >GIỚI TÍNH <span class="lb_span">(*)</span></label> <br>
+                                        <select name="sex" id="sex" class="form-control">
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Khác">Khác</option>
                                         </select>
                                     </div>
-                                    
-                                    <div class="col-md-6">
-                                        <label for="distric" >QUẬN/HUYỆN <span class="lb_span">(*)</span></label> <br>
-                                        <select name="distric" id="distric" class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                            <option value="">1</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    
-                                    <div class="col-md-6">
-                                        <label for="phone" >SỐ ĐIỆN THOẠI <span class="lb_span">(*)</span></label> <br>
-                                        <input type="text" id="phone" class="form-control" name="phone">
-                                    </div>
-                                    
-                                    <div class="col-md-6">
+                                      <div class="col-md-6">
                                         <label for="id_number" >MÃ SỐ THẺ <span class="lb_span">(*)</span></label> <br>
                                         <input type="text" id="id_number" class="form-control" name="id_number">
                                     </div>
+                                    
+                                </div> 
+                                <?php
+                                    //truy vấn dữ liệu tỉnh thành
+                                    include_once __DIR__ .'../../login/province.php';
+                                ?>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="province">TỈNH/THÀNH PHỐ</label>
+                                            <select class="form-control" id="province" name="province">
+                                                <option>Chọn Tỉnh/Thành phố</option>
+                                                <?php foreach ($data as $province) : ?>
+                                                    <option value="<?= $province['idprovince'] ?>"><?= $province['nameprovince'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="district">QUẬN HUYỆN</label>
+                                            <select class="form-control" id="district" name="district">
+                                                <option>Chưa chọn Tỉnh/Thành phố</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            
                                 </div>
+                                <script>
+                                    jQuery(document).ready(function($){
+                                        $("#province").change(function(event){
+                                            provinceID = $("#province").val();
+                                            $.post('district.php',{
+                                                "provinceid" : provinceID
+                                            }, function(data){
+                                                $("#district").html(data);
+                                            })
+                                        })
+                                    
+                                    })
+                                </script>
 
                                 <div class="form-group row">
                                     
@@ -142,11 +160,17 @@
                                     </div>
                                 </div>
 
-
-                                
+                                <div class="form-group row">
+                                    
+                                    <div class="col-md-6">
+                                        <label for="phone" >SỐ ĐIỆN THOẠI <span class="lb_span">(*)</span></label> <br>
+                                        <input type="text" id="phone" class="form-control" name="phone">
+                                    </div>
+                                    
+                                </div>
 
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" name="register">
                                         Register
                                     </button>
                                 </div>
