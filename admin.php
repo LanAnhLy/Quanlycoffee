@@ -94,7 +94,7 @@
         </thead>
     </table>
 
-    <script src="/Quanlycoffee-main/vendor/sweetalerts/sweetalert2.all.min.js"></script>
+    <script src="/Quanlycoffee-main/vendor/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
             //Tìm đối tượng nào đó -> yêu cầu đối tượng làm gì đó
